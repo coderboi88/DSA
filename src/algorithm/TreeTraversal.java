@@ -1,7 +1,9 @@
 package algorithm;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -23,6 +25,31 @@ public class TreeTraversal {
         // recursive postorder
         List<Integer> postOrderList = new ArrayList<>();
         recursivePostorderTraversal(root, postOrderList);
+    }
+    
+    //Iterative Level Order Traversal
+    private List<List<Integer>> iterativeLevelOrderTraversal(TreeNode root) {
+        Queue<TreeNode> q = new LinkedList<>();
+        List<List<Integer>> finalAns = new ArrayList<List<Integer>>();
+        if(root==null){
+            return finalAns;
+        }
+        q.add(root);
+        while(!q.isEmpty()){
+            int levels = q.size();
+            List<Integer> subLevels = new ArrayList<>();
+            for(int i=0;i<levels;i++){
+                if(q.peek().left!=null){
+                    q.add(q.peek().left);
+                }
+                if(q.peek().right!=null){
+                    q.add(q.peek().right);
+                }
+                subLevels.add(q.remove().val);
+            }
+            finalAns.add(subLevels);
+        }
+        return finalAns;
     }
     
     // Preorder Traversal
@@ -145,8 +172,8 @@ public class TreeTraversal {
 }
 
 class Tree {
-    private int value;
-    private Tree left, right;
+    int value;
+    Tree left, right;
     
     public Tree() {
         
